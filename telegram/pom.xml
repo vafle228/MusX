@@ -4,9 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.musxteam</groupId>
+    <parent>
+        <artifactId>musx</artifactId>
+        <groupId>org.musxteam.musx</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>telegram</artifactId>
+    <groupId>org.musxteam.telegram</groupId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <artifactId>api</artifactId>
+            <groupId>org.musxteam.api</groupId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
