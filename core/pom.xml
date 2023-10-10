@@ -9,8 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.musxteam.telegram</groupId>
-    <artifactId>telegram</artifactId>
+    <groupId>org.musxteam.core</groupId>
+    <artifactId>core</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

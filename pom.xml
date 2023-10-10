@@ -11,8 +11,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>api</module>
         <module>telegram</module>
+        <module>database</module>
+        <module>core</module>
     </modules>
 
     <properties>
