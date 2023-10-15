@@ -1,4 +1,4 @@
-package org.musxteam.core.music.search;
+package org.musxteam.music.search;
 
 public class ConcreteSearchService extends SearchServiceBase {
     @Override

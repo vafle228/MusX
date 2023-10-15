@@ -1,7 +1,7 @@
-package org.musxteam.core.music.service;
+package org.musxteam.music.service;
 
-import org.musxteam.core.music.download.ConcreteDownloadService;
-import org.musxteam.core.music.search.ConcreteSearchService;
+import org.musxteam.music.download.ConcreteDownloadService;
+import org.musxteam.music.search.ConcreteSearchService;
 
 public class ConcreteMusicService implements IMusicService {
     ConcreteSearchService searchService = new ConcreteSearchService();

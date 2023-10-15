@@ -1,4 +1,4 @@
-package org.musxteam.core.music.download;
+package org.musxteam.music.download;
 
 public class ConcreteDownloadService extends DownloadServiceBase{
     @Override

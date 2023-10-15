@@ -11,9 +11,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>telegram</module>
         <module>database</module>
         <module>core</module>
+        <module>music</module>
+        <module>telegram</module>
     </modules>
 
     <properties>
