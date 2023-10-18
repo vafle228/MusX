@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import org.musxteam.core.RequestHandler;
 import org.musxteam.core.command.EchoCommand;
 import org.musxteam.core.command.HelpCommand;
+import org.musxteam.core.command.TestCommand;
 import org.musxteam.core.requests.ConcreteRequest;
 
 public class Main {
@@ -17,7 +18,7 @@ public class Main {
         String input = br.readLine();
 
         ConcreteRequest request = new ConcreteRequest(input);
-        requestHandler.startNewCommand(request, new HelpCommand());
+        requestHandler.startNewCommand(request, new TestCommand());
         System.out.println(requestHandler.handleRequest(request));
 
         requestHandler.startNewCommand(request, new EchoCommand());

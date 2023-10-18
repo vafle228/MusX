@@ -4,14 +4,14 @@ import java.util.HashMap;
 
 import org.musxteam.core.requests.IRequest;
 import org.musxteam.core.types.HandlingState;
-import org.musxteam.core.types.ICommand;
+import org.musxteam.core.types.CommandBase;
 
 public class RequestHandler {
-    private final HashMap<String, ICommand> handle_users = new HashMap<>();
+    private final HashMap<String, CommandBase> handle_users = new HashMap<>();
 
     public String handleRequest(IRequest request) {
         String userId = request.getUserId();
-        ICommand command = handle_users.get(userId);
+        CommandBase command = handle_users.get(userId);
         HandlingState state = command.handleRequest(request);
 
         if (state.isHandled()) {
@@ -20,7 +20,7 @@ public class RequestHandler {
         return state.response();
     }
 
-    public void startNewCommand(IRequest request, ICommand command) {
+    public void startNewCommand(IRequest request, CommandBase command) {
         handle_users.put(request.getUserId(), command);
     }
 }
