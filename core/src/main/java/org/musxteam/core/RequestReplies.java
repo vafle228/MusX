@@ -1,6 +1,7 @@
 package org.musxteam.core;
 
 public enum RequestReplies {
+    ECHO_START("Write a message"),
     HELP("Hello, how can I help u?"),
     EMPTY_COMMAND("Write some commands first");
 

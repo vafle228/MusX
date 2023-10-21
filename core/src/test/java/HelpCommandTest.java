@@ -10,6 +10,6 @@ public class HelpCommandTest {
     void testHelpCommandReply() {
         HelpCommand command = new HelpCommand();
         HandlingState state = new HandlingState(RequestReplies.HELP.getReply(), true);
-        Assertions.assertEquals(state, command.handleRequest(new TestRequest()));
+        Assertions.assertEquals(state, command.handleRequest(new TestRequest("")));
     }
 }
