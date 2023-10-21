@@ -3,8 +3,9 @@ package org.musxteam.core.types;
 import org.musxteam.core.requests.IRequest;
 
 public abstract class CommandBase {
-    ICommandState state;
+    ICommandState state = initStartState();
 
+    protected abstract ICommandState initStartState();
     protected void changeState(ICommandState state) {
         this.state = state;
     }
