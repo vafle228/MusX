@@ -11,13 +11,14 @@ public class RequestHandler {
 
     public String handleRequest(IRequest request) {
         String userId = request.getUserId();
-        CommandBase command = handle_users.get(userId);
-        HandlingState state = command.handleRequest(request);
 
-        if (state.isHandled()) {
-            handle_users.remove(userId);
+        if (handle_users.containsKey(userId)) {
+            CommandBase command = handle_users.get(userId);
+            HandlingState state = command.handleRequest(request);
+
+            if (state.isHandled()) { handle_users.remove(userId);} return state.response();
         }
-        return state.response();
+        return RequestReplies.EMPTY_COMMAND.getReply();
     }
 
     public void startNewCommand(IRequest request, CommandBase command) {
