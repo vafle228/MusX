@@ -16,6 +16,9 @@ import org.musxteam.music.download.YoutubeDownloadService;
 import org.musxteam.music.search.YoutubeSearchService;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.search.types.ISearchItemsContainer;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     private static final RequestHandler requestHandler = new RequestHandler();
@@ -27,6 +30,13 @@ public class Main {
 
         TelegramKeyProvider telegramKeyProvider = new TelegramKeyProvider(args);
         System.out.println(telegramKeyProvider.getApiKey());
+
+        try {
+            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+            telegramBotsApi.registerBot(new MusXBot(args));
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
 
         // YoutubeSearchService youtubeSearchService = new YoutubeSearchService();
 
@@ -42,21 +52,5 @@ public class Main {
             System.out.println(item.getItemChannelTitle());
             System.out.println("--------------------------------");
         }*/
-
-        boolean run = false;
-        while (run) {
-            String input = br.readLine();
-            ConcreteRequest request = new ConcreteRequest(input);
-
-            if (Objects.equals(input, "/help"))
-                requestHandler.startNewCommand(request, new HelpCommand());
-
-            if (Objects.equals(input, "/echo"))
-                requestHandler.startNewCommand(request, new EchoCommand());
-
-            if (Objects.equals(input, "/break")) break;
-
-            System.out.println(requestHandler.handleRequest(request));
-        }
     }
 }
