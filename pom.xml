@@ -15,6 +15,7 @@
         <module>core</module>
         <module>music</module>
         <module>telegram</module>
+        <module>credentials</module>
     </modules>
 
 
