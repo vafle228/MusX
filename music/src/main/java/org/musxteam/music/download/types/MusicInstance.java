@@ -1,4 +1,4 @@
-package org.musxteam.music.types;
+package org.musxteam.music.download.types;
 
 public record MusicInstance(
         String title,

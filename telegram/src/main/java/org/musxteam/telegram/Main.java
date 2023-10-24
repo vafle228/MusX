@@ -12,14 +12,24 @@ import org.musxteam.core.requests.ConcreteRequest;
 
 import org.musxteam.music.download.YoutubeDownloadService;
 import org.musxteam.music.search.YoutubeSearchService;
+import org.musxteam.music.search.types.ISearchItem;
+import org.musxteam.music.search.types.ISearchItemsContainer;
 
 public class Main {
     private static final RequestHandler requestHandler = new RequestHandler();
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
-        YoutubeDownloadService youtubeDownloadService = new YoutubeDownloadService();
-        System.out.println(youtubeDownloadService.downloadMusic("dQw4w9WgXcQ"));
+        YoutubeSearchService youtubeSearchService = new YoutubeSearchService();
+        ISearchItemsContainer container = youtubeSearchService.searchMusic("Believer");
+
+        for (ISearchItem item : container.getSearchItems()) {
+            System.out.println(item.getItemTitle());
+            System.out.println(item.getItemVideoId());
+            System.out.println(item.getItemDescription());
+            System.out.println(item.getItemChannelTitle());
+            System.out.println("--------------------------------");
+        }
 
         boolean run = false;
         while (run) {

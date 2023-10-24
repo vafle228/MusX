@@ -1,6 +1,6 @@
 package org.musxteam.music.download;
 
-import org.musxteam.music.types.MusicInstance;
+import org.musxteam.music.download.types.MusicInstance;
 
 import java.io.IOException;
 

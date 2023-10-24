@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.client5.http.fluent.Executor;
-import org.musxteam.music.types.MusicInstance;
+import org.musxteam.music.download.types.MusicInstance;
 
 public class YoutubeDownloadService extends DownloadServiceBase {
     final Executor session = Executor.newInstance();
