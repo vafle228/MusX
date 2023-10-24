@@ -1,8 +1,10 @@
 package org.musxteam.telegram;
 
 import org.musxteam.core.RequestHandler;
+import org.musxteam.core.command.DownloadMusicCommand;
 import org.musxteam.core.command.EchoCommand;
 import org.musxteam.core.command.HelpCommand;
+import org.musxteam.core.command.SearchMusicCommand;
 import org.musxteam.core.requests.TelegramRequest;
 import org.musxteam.credentials.TelegramKeyProvider;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -34,6 +36,12 @@ public class MusXBot extends TelegramLongPollingBot {
 
                 if (Objects.equals(request.getText(), "/echo"))
                     requestHandler.startNewCommand(request, new EchoCommand());
+
+                if (Objects.equals(request.getText(), "/search"))
+                    requestHandler.startNewCommand(request, new SearchMusicCommand());
+
+                if (Objects.equals(request.getText(), "/download"))
+                    requestHandler.startNewCommand(request, new DownloadMusicCommand());
 
                 SendMessage response = new SendMessage();
 
