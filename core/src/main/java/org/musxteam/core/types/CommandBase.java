@@ -12,10 +12,6 @@ public abstract class CommandBase {
         this.state = state;
     }
     public HandlingState handleRequest(IRequest request) {
-        try {
-            return state.handleRequest(request);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return state.handleRequest(request);
     }
 }

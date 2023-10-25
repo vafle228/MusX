@@ -21,36 +21,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
-    private static final RequestHandler requestHandler = new RequestHandler();
-    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-    public static void main(String[] args) throws IOException {
-        YoutubeKeyProvider youtubeKeyProvider = new YoutubeKeyProvider(args);
-        System.out.println(youtubeKeyProvider.getApiKey());
-
-        TelegramKeyProvider telegramKeyProvider = new TelegramKeyProvider(args);
-        System.out.println(telegramKeyProvider.getApiKey());
-
-        try {
-            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(new MusXBot(args));
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-
-        // YoutubeSearchService youtubeSearchService = new YoutubeSearchService();
-
-        // YoutubeDownloadService youtubeDownloadService = new YoutubeDownloadService();
-        // System.out.println(youtubeDownloadService.downloadMusic("BciS5krYL80"));
-
-        // ISearchItemsContainer container = youtubeSearchService.searchMusic("Believer");
-
-/*        for (ISearchItem item : container.getSearchItems()) {
-            System.out.println(item.getItemTitle());
-            System.out.println(item.getItemVideoId());
-            System.out.println(item.getItemDescription());
-            System.out.println(item.getItemChannelTitle());
-            System.out.println("--------------------------------");
-        }*/
+    public static void main(String[] args) throws TelegramApiException {
+        TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+        telegramBotsApi.registerBot(new MusXBot(args));
     }
 }

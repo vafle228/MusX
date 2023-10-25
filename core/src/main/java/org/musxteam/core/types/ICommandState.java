@@ -5,5 +5,5 @@ import org.musxteam.core.requests.IRequest;
 import java.io.IOException;
 
 public interface ICommandState {
-    HandlingState handleRequest(IRequest request) throws IOException;
+    HandlingState handleRequest(IRequest request);
 }

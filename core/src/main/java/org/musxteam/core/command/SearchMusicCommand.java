@@ -8,11 +8,16 @@ import org.musxteam.core.types.ICommandState;
 import org.musxteam.music.search.YoutubeSearchService;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.search.types.ISearchItemsContainer;
+import org.musxteam.credentials.YoutubeKeyProvider;
 
 import java.io.IOException;
 
 public class SearchMusicCommand extends CommandBase {
-    private YoutubeSearchService youtubeSearchService = new YoutubeSearchService();
+    private final YoutubeSearchService youtubeSearchService;
+
+    public SearchMusicCommand(YoutubeKeyProvider keyProvider) {
+        youtubeSearchService = new YoutubeSearchService(keyProvider);
+    }
 
     @Override
     protected ICommandState initStartState() { return new StartState(); }
@@ -29,19 +34,16 @@ public class SearchMusicCommand extends CommandBase {
         @Override
         public HandlingState handleRequest(IRequest request) {
             try {
-                String response = "";
+                StringBuilder response = new StringBuilder();
                 ISearchItemsContainer container = youtubeSearchService.searchMusic(request.getText());
 
                 for (ISearchItem item : container.getSearchItems()) {
-                    response += item.getItemTitle();
-                    response += " | " + item.getItemVideoId() + "\n";
+                    response.append(item.getItemTitle());
+                    response.append(" | ").append(item.getItemVideoId()).append("\n");
                 }
-
-                return new HandlingState(response, true);
+                return new HandlingState(response.toString(), true);
             }
-            catch (IOException e) {
-                return new HandlingState(e.getMessage(), true);
-            }
+            catch (IOException e) { return new HandlingState(e.getMessage(), true); }
         }
     }
 }
