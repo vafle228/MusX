@@ -1,7 +1,11 @@
 package org.musxteam.core;
 
 import java.util.HashMap;
+import java.util.Objects;
 
+import org.musxteam.core.command.DownloadMusicCommand;
+import org.musxteam.core.command.HelpCommand;
+import org.musxteam.core.command.SearchMusicCommand;
 import org.musxteam.core.requests.IRequest;
 import org.musxteam.core.types.HandlingState;
 import org.musxteam.core.types.CommandBase;
@@ -21,7 +25,14 @@ public class RequestHandler {
         return RequestReplies.EMPTY_COMMAND.getReply();
     }
 
-    public void startNewCommand(IRequest request, CommandBase command) {
-        handle_users.put(request.getUserId(), command);
+    public void startNewCommand(IRequest request) {
+        if (Objects.equals(request.getText(), "/help"))
+            handle_users.put(request.getUserId(), new HelpCommand());
+
+        if (Objects.equals(request.getText(), "/search"))
+            handle_users.put(request.getUserId(), new SearchMusicCommand());
+
+        if (Objects.equals(request.getText(), "/download"))
+            handle_users.put(request.getUserId(), new DownloadMusicCommand());
     }
 }

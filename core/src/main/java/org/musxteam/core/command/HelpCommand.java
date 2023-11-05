@@ -12,7 +12,7 @@ public class HelpCommand extends CommandBase {
         return new StartState();
     }
 
-    static class StartState implements ICommandState {
+    class StartState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request) {
             return new HandlingState(RequestReplies.HELP.getReply(), true);

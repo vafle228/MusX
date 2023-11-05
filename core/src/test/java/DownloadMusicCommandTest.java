@@ -3,7 +3,6 @@ import org.junit.jupiter.api.Test;
 
 import org.musxteam.core.RequestReplies;
 import org.musxteam.core.command.DownloadMusicCommand;
-import org.musxteam.core.command.EchoCommand;
 import org.musxteam.core.requests.TestRequest;
 import org.musxteam.core.types.HandlingState;
 

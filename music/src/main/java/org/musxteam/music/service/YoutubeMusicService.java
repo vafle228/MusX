@@ -1,27 +1,28 @@
 package org.musxteam.music.service;
 
 import org.musxteam.credentials.YoutubeKeyProvider;
+import org.musxteam.music.download.DownloadServiceBase;
 import org.musxteam.music.download.YoutubeDownloadService;
 import org.musxteam.music.download.types.MusicInstance;
+import org.musxteam.music.search.SearchServiceBase;
 import org.musxteam.music.search.YoutubeSearchService;
 import org.musxteam.music.search.types.ISearchItemsContainer;
 
 import java.io.IOException;
 
-public class YoutubeMusicService implements IMusicService {
-    YoutubeSearchService searchService;
-    YoutubeDownloadService downloadService = new YoutubeDownloadService();
-
-    public YoutubeMusicService(YoutubeKeyProvider keyProvider) {
-        searchService = new YoutubeSearchService(keyProvider);
-    }
+public class YoutubeMusicService extends MusicServiceBase {
+    private static YoutubeKeyProvider keyProvider;
 
     @Override
-    public MusicInstance downloadMusic(String id) throws IOException {
-        return downloadService.downloadMusic(id);
+    protected DownloadServiceBase initDownloadService() {
+        return new YoutubeDownloadService();
     }
     @Override
-    public ISearchItemsContainer searchMusic(String query) throws IOException {
-        return searchService.searchMusic(query);
+    protected SearchServiceBase initSearchService() {
+        return new YoutubeSearchService(keyProvider);
+    }
+
+    public static void initYoutubeKeyProvider(String[] args) {
+        keyProvider = new YoutubeKeyProvider(args);
     }
 }

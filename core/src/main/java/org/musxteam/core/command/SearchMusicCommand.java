@@ -9,20 +9,16 @@ import org.musxteam.music.search.YoutubeSearchService;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.search.types.ISearchItemsContainer;
 import org.musxteam.credentials.YoutubeKeyProvider;
+import org.musxteam.music.service.MusicServiceBase;
+import org.musxteam.music.service.YoutubeMusicService;
 
 import java.io.IOException;
 
 public class SearchMusicCommand extends CommandBase {
-    private final YoutubeSearchService youtubeSearchService;
-
-    public SearchMusicCommand(YoutubeKeyProvider keyProvider) {
-        youtubeSearchService = new YoutubeSearchService(keyProvider);
-    }
-
     @Override
     protected ICommandState initStartState() { return new StartState(); }
 
-     class StartState implements ICommandState {
+    class StartState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request) {
             changeState(new SearchState());
@@ -35,7 +31,8 @@ public class SearchMusicCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request) {
             try {
                 StringBuilder response = new StringBuilder();
-                ISearchItemsContainer container = youtubeSearchService.searchMusic(request.getText());
+                MusicServiceBase service = request.getUser().musicService;
+                ISearchItemsContainer container = service.searchMusic(request.getText());
 
                 for (ISearchItem item : container.getSearchItems()) {
                     response.append(item.getItemTitle());

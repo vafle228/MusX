@@ -1,5 +1,7 @@
 package org.musxteam.core.requests;
 
+import org.musxteam.database.models.MusxUser;
+
 import java.text.MessageFormat;
 
 public class TestRequest implements IRequest {
@@ -17,6 +19,11 @@ public class TestRequest implements IRequest {
     public String getUserId() {
         return "1";
     }
+    @Override
+    public MusxUser getUser() {
+        return MusxUser.getInstance();
+    }
+
     @Override
     public String toString() {
         return MessageFormat.format("Request[text={0}, user_id={1}]", getText(), getUserId());

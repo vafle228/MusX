@@ -10,12 +10,12 @@ import org.musxteam.music.download.types.MusicInstance;
 import org.musxteam.music.search.YoutubeSearchService;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.search.types.ISearchItemsContainer;
+import org.musxteam.music.service.MusicServiceBase;
+import org.musxteam.music.service.YoutubeMusicService;
 
 import java.io.IOException;
 
 public class DownloadMusicCommand extends CommandBase {
-    private final YoutubeDownloadService youtubeDownloadService = new YoutubeDownloadService();
-
     @Override
     protected ICommandState initStartState() { return new StartState(); }
 
@@ -31,7 +31,8 @@ public class DownloadMusicCommand extends CommandBase {
         @Override
         public HandlingState handleRequest(IRequest request) {
             try {
-                MusicInstance instance = youtubeDownloadService.downloadMusic(request.getText());
+                MusicServiceBase service = request.getUser().musicService;
+                MusicInstance instance = service.downloadMusic(request.getText());
                 return new HandlingState(instance.musicUrl(), true);
             }
             catch (IOException e) { return new HandlingState(e.getMessage(), true); }

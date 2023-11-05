@@ -1,5 +1,6 @@
 package org.musxteam.core.requests;
 
+import org.musxteam.database.models.MusxUser;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 public class TelegramRequest implements IRequest {
@@ -16,5 +17,9 @@ public class TelegramRequest implements IRequest {
     @Override
     public String getUserId() {
         return message.getFrom().getId().toString();
+    }
+    @Override
+    public MusxUser getUser() {
+        return MusxUser.getInstance();
     }
 }
