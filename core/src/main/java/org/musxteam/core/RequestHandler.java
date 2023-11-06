@@ -8,13 +8,13 @@ import org.musxteam.core.command.HelpCommand;
 import org.musxteam.core.command.SearchMusicCommand;
 import org.musxteam.core.command.types.HandlingState;
 import org.musxteam.core.command.types.CommandBase;
-import org.musxteam.core.views.types.ICommandView;
-import org.musxteam.core.views.types.ICommandViewFactory;
+import org.musxteam.core.views.types.IView;
+import org.musxteam.core.views.types.IViewFactory;
 
 public class RequestHandler {
     private final HashMap<String, CommandBase> handle_users = new HashMap<>();
 
-    public ICommandView handleRequest(IRequest request) {
+    public IView handleRequest(IRequest request) {
         String userId = request.getUserId();
 
         if (handle_users.containsKey(userId)) {
@@ -26,14 +26,14 @@ public class RequestHandler {
         return null;
     }
 
-    public void startNewCommand(IRequest request, ICommandViewFactory viewFactory) {
+    public void startNewCommand(IRequest request, IViewFactory viewFactory) {
         if (Objects.equals(request.getText(), "/help"))
-            handle_users.put(request.getUserId(), new HelpCommand(viewFactory.getHelpCommandView()));
+            handle_users.put(request.getUserId(), new HelpCommand(viewFactory));
 
         if (Objects.equals(request.getText(), "/search"))
             handle_users.put(request.getUserId(), new SearchMusicCommand());
 
         if (Objects.equals(request.getText(), "/download"))
-            handle_users.put(request.getUserId(), new DownloadMusicCommand());
+            handle_users.put(request.getUserId(), new DownloadMusicCommand(viewFactory));
     }
 }

@@ -5,11 +5,12 @@ import org.musxteam.core.command.types.CommandBase;
 import org.musxteam.core.IRequest;
 import org.musxteam.core.command.types.HandlingState;
 import org.musxteam.core.command.types.ICommandState;
-import org.musxteam.core.views.HelpCommandViewBase;
+import org.musxteam.core.views.TextMessageViewBase;
+import org.musxteam.core.views.types.IViewFactory;
 
 public class HelpCommand extends CommandBase {
-    final HelpCommandViewBase view;
-    public HelpCommand(HelpCommandViewBase view) { this.view = view; }
+    private final IViewFactory viewFactory;
+    public HelpCommand(IViewFactory viewFactory) { this.viewFactory = viewFactory; }
 
     @Override
     protected ICommandState initStartState() { return new StartState(); }
@@ -17,7 +18,7 @@ public class HelpCommand extends CommandBase {
     class StartState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request) {
-            return new HandlingState(view, true);
+            return new HandlingState(viewFactory.getTextMessageView(RequestReplies.HELP.getReply()), true);
         }
     }
 }
