@@ -19,8 +19,7 @@ public class MusXBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if(update.hasMessage() && update.getMessage().hasText())
-        {
+        if(update.hasMessage() && update.getMessage().hasText()) {
             Message message = update.getMessage();
             TelegramRequest request = new TelegramRequest(message);
             requestHandler.startNewCommand(request, viewFactory);

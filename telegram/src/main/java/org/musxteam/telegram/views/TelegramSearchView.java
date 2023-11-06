@@ -1,4 +1,11 @@
 package org.musxteam.telegram.views;
 
-public class TelegramSearchView {
+import org.musxteam.core.IRequest;
+import org.musxteam.core.views.SearchViewBase;
+
+public class TelegramSearchView extends SearchViewBase {
+    @Override
+    public void render(IRequest request) {
+
+    }
 }

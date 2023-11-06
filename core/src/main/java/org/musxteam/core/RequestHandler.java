@@ -31,7 +31,7 @@ public class RequestHandler {
             handle_users.put(request.getUserId(), new HelpCommand(viewFactory));
 
         if (Objects.equals(request.getText(), "/search"))
-            handle_users.put(request.getUserId(), new SearchMusicCommand());
+            handle_users.put(request.getUserId(), new SearchMusicCommand(viewFactory));
 
         if (Objects.equals(request.getText(), "/download"))
             handle_users.put(request.getUserId(), new DownloadMusicCommand(viewFactory));
