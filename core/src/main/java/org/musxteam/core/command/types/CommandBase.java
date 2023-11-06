@@ -1,4 +1,6 @@
-package org.musxteam.core.types;
+package org.musxteam.core.command.types;
+
+import org.musxteam.core.IRequest;
 
 public abstract class CommandBase {
     ICommandState state = initStartState();

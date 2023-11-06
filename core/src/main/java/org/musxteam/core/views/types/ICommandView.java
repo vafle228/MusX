@@ -1,5 +1,7 @@
 package org.musxteam.core.views.types;
 
+import org.musxteam.core.IRequest;
+
 public interface ICommandView {
-    void render();
+    void render(IRequest request);
 }

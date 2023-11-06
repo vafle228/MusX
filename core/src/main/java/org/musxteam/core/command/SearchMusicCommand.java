@@ -1,10 +1,10 @@
 package org.musxteam.core.command;
 
 import org.musxteam.core.RequestReplies;
-import org.musxteam.core.types.IRequest;
-import org.musxteam.core.types.CommandBase;
-import org.musxteam.core.types.HandlingState;
-import org.musxteam.core.types.ICommandState;
+import org.musxteam.core.IRequest;
+import org.musxteam.core.command.types.CommandBase;
+import org.musxteam.core.command.types.HandlingState;
+import org.musxteam.core.command.types.ICommandState;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.search.types.ISearchItemsContainer;
 import org.musxteam.music.service.MusicServiceBase;
@@ -19,7 +19,7 @@ public class SearchMusicCommand extends CommandBase {
         @Override
         public HandlingState handleRequest(IRequest request) {
             changeState(new SearchState());
-            return new HandlingState(RequestReplies.SEARCH_START.getReply(), false);
+            return new HandlingState(null, false);
         }
     }
 
@@ -35,9 +35,9 @@ public class SearchMusicCommand extends CommandBase {
                     response.append(item.getItemTitle());
                     response.append(" | ").append(item.getItemVideoId()).append("\n");
                 }
-                return new HandlingState(response.toString(), true);
+                return new HandlingState(null, true);
             }
-            catch (IOException e) { return new HandlingState(e.getMessage(), true); }
+            catch (IOException e) { return new HandlingState(null, true); }
         }
     }
 }
