@@ -1,5 +1,6 @@
-package org.musxteam.core.requests;
+package org.musxteam.telegram;
 
+import org.musxteam.core.types.IRequest;
 import org.musxteam.database.models.MusxUser;
 import org.telegram.telegrambots.meta.api.objects.Message;
 

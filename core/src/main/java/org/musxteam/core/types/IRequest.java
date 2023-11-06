@@ -1,4 +1,4 @@
-package org.musxteam.core.requests;
+package org.musxteam.core.types;
 
 import org.musxteam.database.models.MusxUser;
 

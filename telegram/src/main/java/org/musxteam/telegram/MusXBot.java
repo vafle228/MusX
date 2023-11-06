@@ -1,13 +1,14 @@
 package org.musxteam.telegram;
 
 import org.musxteam.core.RequestHandler;
-import org.musxteam.core.requests.TelegramRequest;
 import org.musxteam.credentials.TelegramKeyProvider;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.net.URL;
 
 
 public class MusXBot extends TelegramLongPollingBot {
@@ -26,13 +27,25 @@ public class MusXBot extends TelegramLongPollingBot {
             TelegramRequest request = new TelegramRequest(message);
             requestHandler.startNewCommand(request);
 
-            SendMessage response = new SendMessage();
+            // SendMessage response = new SendMessage();
+            SendAudio response = new SendAudio();
 
-            response.setChatId(message.getChatId().toString());
-            response.setText(requestHandler.handleRequest(request));
+            try {
+                URL url = new URL("https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg");
+                InputFile thumbnail = new InputFile(url.openStream(), "thumbnail.jpeg");
 
-            try { execute(response); }
-            catch (TelegramApiException e) { e.printStackTrace(); }
+                URL musicUrl = new URL("https://apiyoutube.cc/m4a/QcXgW9w4wQd::8ec40ebde81a193756eba5702da565bf::1699199393::no::ur");
+                InputFile audio = new InputFile(musicUrl.openStream(), "audio.m4a");
+
+                response.setAudio(audio);
+                response.setThumb(thumbnail);
+                response.setTitle("Never gonna give u up");
+                response.setPerformer("Rick Astley");
+                response.setChatId(message.getChatId().toString());
+
+                execute(response);
+            }
+            catch (Exception e) { e.printStackTrace(); }
         }
     }
     @Override

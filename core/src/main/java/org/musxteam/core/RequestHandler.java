@@ -6,7 +6,7 @@ import java.util.Objects;
 import org.musxteam.core.command.DownloadMusicCommand;
 import org.musxteam.core.command.HelpCommand;
 import org.musxteam.core.command.SearchMusicCommand;
-import org.musxteam.core.requests.IRequest;
+import org.musxteam.core.types.IRequest;
 import org.musxteam.core.types.HandlingState;
 import org.musxteam.core.types.CommandBase;
 

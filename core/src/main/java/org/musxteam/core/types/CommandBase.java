@@ -1,9 +1,5 @@
 package org.musxteam.core.types;
 
-import org.musxteam.core.requests.IRequest;
-
-import java.io.IOException;
-
 public abstract class CommandBase {
     ICommandState state = initStartState();
 

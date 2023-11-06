@@ -1,16 +1,13 @@
 package org.musxteam.core.command;
 
 import org.musxteam.core.RequestReplies;
-import org.musxteam.core.requests.IRequest;
+import org.musxteam.core.types.IRequest;
 import org.musxteam.core.types.CommandBase;
 import org.musxteam.core.types.HandlingState;
 import org.musxteam.core.types.ICommandState;
-import org.musxteam.music.search.YoutubeSearchService;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.search.types.ISearchItemsContainer;
-import org.musxteam.credentials.YoutubeKeyProvider;
 import org.musxteam.music.service.MusicServiceBase;
-import org.musxteam.music.service.YoutubeMusicService;
 
 import java.io.IOException;
 
