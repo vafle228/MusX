@@ -16,8 +16,8 @@ public record YoutubeSearchItemsContainer(SearchItem[] items) implements ISearch
             return id.videoId;
         }
         @Override
-        public String getItemDescription() {
-            return snippet.description;
+        public String getItemThumbnail() {
+            return "https://i.ytimg.com/vi/" + id.videoId + "/mqdefault.jpg";
         }
         @Override
         public String getItemChannelTitle() {
@@ -25,6 +25,6 @@ public record YoutubeSearchItemsContainer(SearchItem[] items) implements ISearch
         }
 
         public record VideoId(String videoId) {}
-        public record Snippet(String title, String description, String channelTitle) {}
+        public record Snippet(String title, String channelTitle) {}
     }
 }

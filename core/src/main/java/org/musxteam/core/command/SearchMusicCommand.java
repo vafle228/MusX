@@ -5,6 +5,7 @@ import org.musxteam.core.IRequest;
 import org.musxteam.core.command.types.CommandBase;
 import org.musxteam.core.command.types.HandlingState;
 import org.musxteam.core.command.types.ICommandState;
+import org.musxteam.core.views.SearchViewBase;
 import org.musxteam.core.views.TextMessageViewBase;
 import org.musxteam.core.views.types.IViewFactory;
 import org.musxteam.music.search.types.ISearchItem;
@@ -33,15 +34,14 @@ public class SearchMusicCommand extends CommandBase {
         @Override
         public HandlingState handleRequest(IRequest request) {
             try {
-                StringBuilder response = new StringBuilder();
                 MusicServiceBase service = request.getUser().musicService;
                 ISearchItemsContainer container = service.searchMusic(request.getText());
+                ISearchItem item = container.getSearchItems()[0];
 
-                for (ISearchItem item : container.getSearchItems()) {
-                    response.append(item.getItemTitle());
-                    response.append(" | ").append(item.getItemVideoId()).append("\n");
-                }
-                return new HandlingState(null, true);
+                SearchViewBase view = viewFactory.getSearchView(
+                        item.getItemTitle(), item.getItemVideoId(),
+                        item.getItemChannelTitle(), item.getItemThumbnail()
+                ); return new HandlingState(view, true);
             }
             catch (IOException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);

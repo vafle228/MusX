@@ -9,8 +9,8 @@ public class TelegramViewFactory implements IViewFactory {
     public TelegramViewFactory(TelegramLongPollingBot bot) { this.bot = bot; }
 
     @Override
-    public SearchViewBase getSearchView() {
-        return null;
+    public SearchViewBase getSearchView(String title, String videoId, String channelTitle, String thumbnailUrl) {
+        return new TelegramSearchView(title, videoId, channelTitle, thumbnailUrl, bot);
     }
     @Override
     public TextMessageViewBase getTextMessageView(String text) {
