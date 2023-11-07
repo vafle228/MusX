@@ -5,6 +5,8 @@ import org.musxteam.core.views.SearchViewBase;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
@@ -12,6 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelegramSearchView extends SearchViewBase {
     private final TelegramLongPollingBot bot;
@@ -28,6 +32,20 @@ public class TelegramSearchView extends SearchViewBase {
             SendPhoto response = SendPhoto.builder()
                     .photo(thumbnailFile).chatId(request.getChatId())
                     .caption(title + "\n" + channelTitle).build();
+
+            InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+            List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+
+            List<InlineKeyboardButton> firstRow = new ArrayList<>();
+            firstRow.add(InlineKeyboardButton.builder().text("Next").callbackData("next").build());
+            firstRow.add(InlineKeyboardButton.builder().text("Previous").callbackData("prev").build());
+
+            List<InlineKeyboardButton> secondRow = new ArrayList<>();
+            secondRow.add(InlineKeyboardButton.builder().text("Download").callbackData("next").build());
+
+            keyboard.add(firstRow); keyboard.add(secondRow);
+            markup.setKeyboard(keyboard); response.setReplyMarkup(markup);
+
             this.bot.execute(response);
         }
         catch (URISyntaxException | IOException ex) {
