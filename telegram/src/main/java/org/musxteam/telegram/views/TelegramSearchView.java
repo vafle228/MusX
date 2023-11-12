@@ -31,26 +31,27 @@ public class TelegramSearchView extends SearchViewBase {
 
             SendPhoto response = SendPhoto.builder()
                     .photo(thumbnailFile).chatId(request.getChatId())
-                    .caption(title + "\n" + channelTitle).build();
-
-            InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-            List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-
-            List<InlineKeyboardButton> firstRow = new ArrayList<>();
-            firstRow.add(InlineKeyboardButton.builder().text("Next").callbackData("next").build());
-            firstRow.add(InlineKeyboardButton.builder().text("Previous").callbackData("prev").build());
-
-            List<InlineKeyboardButton> secondRow = new ArrayList<>();
-            secondRow.add(InlineKeyboardButton.builder().text("Download").callbackData("next").build());
-
-            keyboard.add(firstRow); keyboard.add(secondRow);
-            markup.setKeyboard(keyboard); response.setReplyMarkup(markup);
-
-            this.bot.execute(response);
+                    .caption(title + "\n" + "Channel: " + channelTitle).build();
+            response.setReplyMarkup(initMessageKeyboard()); this.bot.execute(response);
         }
         catch (URISyntaxException | IOException ex) {
             new TelegramTextMessageView(ex.toString(), bot).render(request);
         }
         catch (TelegramApiException ex) { ex.printStackTrace(System.out); }
+    }
+
+    private InlineKeyboardMarkup initMessageKeyboard() {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+
+        List<InlineKeyboardButton> firstRow = new ArrayList<>();
+        firstRow.add(InlineKeyboardButton.builder().text("Previous").callbackData("prev").build());
+        firstRow.add(InlineKeyboardButton.builder().text("Next").callbackData("next").build());
+
+        List<InlineKeyboardButton> secondRow = new ArrayList<>();
+        secondRow.add(InlineKeyboardButton.builder().text("Download").callbackData("next").build());
+        keyboard.add(firstRow); keyboard.add(secondRow); markup.setKeyboard(keyboard);
+
+        return markup;
     }
 }

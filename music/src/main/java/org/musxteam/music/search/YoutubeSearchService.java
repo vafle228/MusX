@@ -14,12 +14,12 @@ import org.musxteam.music.search.types.YoutubeSearchItemsContainer;
 
 public class YoutubeSearchService extends SearchServiceBase {
     final YoutubeKeyProvider youtubeKeyProvider;
-    final String searchEndpoint = "https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&key={1}";
+    final String searchEndpoint = "https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&type=video&key={1}";
 
     public YoutubeSearchService(YoutubeKeyProvider keyProvider) { youtubeKeyProvider = keyProvider; }
 
     @Override
-    public ISearchItemsContainer searchMusic(String query) throws IOException {
+    protected ISearchItemsContainer executeSearchQuery(String query) throws IOException {
         Content rawResponse = Request.get(formatApiRequest(query)).execute().returnContent();
         return new Gson().fromJson(rawResponse.asString(), YoutubeSearchItemsContainer.class);
     }

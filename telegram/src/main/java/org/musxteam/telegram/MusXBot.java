@@ -25,6 +25,9 @@ public class MusXBot extends TelegramLongPollingBot {
         if (update.hasCallbackQuery()) {
             CallbackQuery query = update.getCallbackQuery();
             CallbackRequest request = new CallbackRequest(query);
+
+            requestHandler.startNewCommand(request, viewFactory);
+            requestHandler.handleRequest(request).render(request);
         }
 
         if(update.hasMessage() && update.getMessage().hasText()) {

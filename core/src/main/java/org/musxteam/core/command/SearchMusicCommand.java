@@ -21,6 +21,13 @@ public class SearchMusicCommand extends CommandBase {
     @Override
     protected ICommandState initStartState() { return new StartState(); }
 
+    private HandlingState formSearchResponse(ISearchItem item) {
+        SearchViewBase view = viewFactory.getSearchView(
+                item.getItemTitle(), item.getItemVideoId(),
+                item.getItemChannelTitle(), item.getItemThumbnail()
+        ); return new HandlingState(view, false);
+    }
+
     class StartState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request) {
@@ -35,16 +42,28 @@ public class SearchMusicCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request) {
             try {
                 MusicServiceBase service = request.getUser().musicService;
-                ISearchItemsContainer container = service.searchMusic(request.getText());
-                ISearchItem item = container.getSearchItems()[0];
-
-                SearchViewBase view = viewFactory.getSearchView(
-                        item.getItemTitle(), item.getItemVideoId(),
-                        item.getItemChannelTitle(), item.getItemThumbnail()
-                ); return new HandlingState(view, true);
+                ISearchItem item = service.searchMusic(request.getText());
+                changeState(new SearchViewState()); return formSearchResponse(item);
             }
             catch (IOException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
+            }
+        }
+    }
+
+    class SearchViewState implements ICommandState {
+        @Override
+        public HandlingState handleRequest(IRequest request) {
+            MusicServiceBase service = request.getUser().musicService;
+            try {
+                return switch (request.getText()) {
+                    case "next" -> formSearchResponse(service.getNextItem());
+                    case "prev" -> formSearchResponse(service.getPrevItem());
+                    default -> new HandlingState(viewFactory.getTextMessageView("Illegal argument"), false);
+                };
+            }
+            catch (ArrayIndexOutOfBoundsException ex) {
+                return new HandlingState(viewFactory.getTextMessageView(ex.toString()), false);
             }
         }
     }

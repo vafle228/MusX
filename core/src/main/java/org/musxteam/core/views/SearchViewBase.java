@@ -2,7 +2,6 @@ package org.musxteam.core.views;
 
 import org.musxteam.core.views.types.IView;
 
-import java.text.MessageFormat;
 
 public abstract class SearchViewBase implements IView {
     protected final String title;
