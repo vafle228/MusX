@@ -49,7 +49,7 @@ public class TelegramSearchView extends SearchViewBase {
         firstRow.add(InlineKeyboardButton.builder().text("Next").callbackData("next").build());
 
         List<InlineKeyboardButton> secondRow = new ArrayList<>();
-        secondRow.add(InlineKeyboardButton.builder().text("Download").callbackData("next").build());
+        secondRow.add(InlineKeyboardButton.builder().text("Download").callbackData("/download " + videoId).build());
         keyboard.add(firstRow); keyboard.add(secondRow); markup.setKeyboard(keyboard);
 
         return markup;

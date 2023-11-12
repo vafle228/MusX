@@ -2,7 +2,9 @@ package org.musxteam.core;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
+import org.musxteam.core.command.DownloadMusicArgCommand;
 import org.musxteam.core.command.DownloadMusicCommand;
 import org.musxteam.core.command.HelpCommand;
 import org.musxteam.core.command.SearchMusicCommand;
@@ -25,7 +27,6 @@ public class RequestHandler {
         }
         return null;
     }
-
     public void startNewCommand(IRequest request, IViewFactory viewFactory) {
         if (Objects.equals(request.getText(), "/help"))
             handle_users.put(request.getUserId(), new HelpCommand(viewFactory));
@@ -35,5 +36,9 @@ public class RequestHandler {
 
         if (Objects.equals(request.getText(), "/download"))
             handle_users.put(request.getUserId(), new DownloadMusicCommand(viewFactory));
+    }
+    public void startNewArgCommand(IRequest request, IViewFactory viewFactory) {
+        if (Pattern.matches("/download .{11}", request.getText()))
+            handle_users.put(request.getUserId(), new DownloadMusicArgCommand(viewFactory));
     }
 }

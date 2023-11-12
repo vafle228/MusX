@@ -9,8 +9,7 @@ import org.musxteam.core.views.TextMessageViewBase;
 import org.musxteam.core.views.types.IViewFactory;
 
 public class HelpCommand extends CommandBase {
-    private final IViewFactory viewFactory;
-    public HelpCommand(IViewFactory viewFactory) { this.viewFactory = viewFactory; }
+    public HelpCommand(IViewFactory viewFactory) { super(viewFactory); }
 
     @Override
     protected ICommandState initStartState() { return new StartState(); }
