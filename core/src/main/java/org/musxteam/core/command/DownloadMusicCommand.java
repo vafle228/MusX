@@ -14,14 +14,12 @@ import org.musxteam.music.service.MusicServiceBase;
 import java.io.IOException;
 
 public class DownloadMusicCommand extends CommandBase {
-    public DownloadMusicCommand(IViewFactory viewFactory) { super(viewFactory); }
-
     @Override
     protected ICommandState initStartState() { return new StartState(); }
 
     class StartState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             TextMessageViewBase view = viewFactory.getTextMessageView(
                     RequestReplies.DOWNLOAD_START.getReply()
             ); changeState(new DownloadState()); return new HandlingState(view, false);
@@ -30,7 +28,7 @@ public class DownloadMusicCommand extends CommandBase {
 
     class DownloadState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             try {
                 MusicServiceBase service = request.getUser().musicService;
                 MusicInstance instance = service.downloadMusic(request.getText());

@@ -9,14 +9,12 @@ import org.musxteam.core.views.TextMessageViewBase;
 import org.musxteam.core.views.types.IViewFactory;
 
 public class HelpCommand extends CommandBase {
-    public HelpCommand(IViewFactory viewFactory) { super(viewFactory); }
-
     @Override
     protected ICommandState initStartState() { return new StartState(); }
 
     class StartState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             return new HandlingState(viewFactory.getTextMessageView(RequestReplies.HELP.getReply()), true);
         }
     }

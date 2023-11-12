@@ -14,12 +14,10 @@ import org.musxteam.music.service.MusicServiceBase;
 import java.io.IOException;
 
 public class SearchMusicCommand extends CommandBase {
-    public SearchMusicCommand(IViewFactory viewFactory) { super(viewFactory); }
-
     @Override
     protected ICommandState initStartState() { return new StartState(); }
 
-    private HandlingState formSearchResponse(ISearchItem item) {
+    private HandlingState formSearchResponse(ISearchItem item, IViewFactory viewFactory) {
         SearchViewBase view = viewFactory.getSearchView(
                 item.getItemTitle(), item.getItemVideoId(),
                 item.getItemChannelTitle(), item.getItemThumbnail()
@@ -28,7 +26,7 @@ public class SearchMusicCommand extends CommandBase {
 
     class StartState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             TextMessageViewBase view = viewFactory.getTextMessageView(
                     RequestReplies.SEARCH_START.getReply()
             ); changeState(new SearchState()); return new HandlingState(view, false);
@@ -37,11 +35,11 @@ public class SearchMusicCommand extends CommandBase {
 
     class SearchState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             try {
                 MusicServiceBase service = request.getUser().musicService;
                 ISearchItem item = service.searchMusic(request.getText());
-                changeState(new SearchViewState()); return formSearchResponse(item);
+                changeState(new SearchViewState()); return formSearchResponse(item, viewFactory);
             }
             catch (IOException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
@@ -51,12 +49,12 @@ public class SearchMusicCommand extends CommandBase {
 
     class SearchViewState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             MusicServiceBase service = request.getUser().musicService;
             try {
                 return switch (request.getText()) {
-                    case "next" -> formSearchResponse(service.getNextItem());
-                    case "prev" -> formSearchResponse(service.getPrevItem());
+                    case "next" -> formSearchResponse(service.getNextItem(), viewFactory);
+                    case "prev" -> formSearchResponse(service.getPrevItem(), viewFactory);
                     default -> new HandlingState(viewFactory.getTextMessageView("Illegal argument"), false);
                 };
             }

@@ -12,14 +12,12 @@ import org.musxteam.music.service.MusicServiceBase;
 import java.io.IOException;
 
 public class DownloadMusicArgCommand extends CommandBase {
-    public DownloadMusicArgCommand(IViewFactory viewFactory) { super(viewFactory); }
-
     @Override
     protected ICommandState initStartState() { return new DownloadState(); }
 
     class DownloadState implements ICommandState {
         @Override
-        public HandlingState handleRequest(IRequest request) {
+        public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             try {
                 MusicServiceBase service = request.getUser().musicService;
                 String videoId = request.getText().split(" ")[1];
