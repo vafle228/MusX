@@ -8,6 +8,7 @@ import org.musxteam.music.search.types.ISearchItemsContainer;
 public abstract class SearchServiceBase {
     private int currentItem = 0;
     private ISearchItemsContainer itemsContainer;
+
     protected abstract ISearchItemsContainer executeSearchQuery(String query) throws IOException;
 
     public ISearchItem searchMusic(String query) throws IOException {
@@ -25,7 +26,7 @@ public abstract class SearchServiceBase {
             throw new ArrayIndexOutOfBoundsException("Search item out of range");
         return itemsContainer.getSearchItems()[++currentItem];
     }
-    public  ISearchItem getPrevItem() throws ArrayIndexOutOfBoundsException {
+    public ISearchItem getPrevItem() throws ArrayIndexOutOfBoundsException {
         if (currentItem - 1 < 0)
             throw new ArrayIndexOutOfBoundsException("Search item out of range");
         return itemsContainer.getSearchItems()[--currentItem];

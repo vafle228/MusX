@@ -22,6 +22,7 @@ public class YoutubeDownloadService extends DownloadServiceBase {
 
     static class MetaData {
         public String title;
+
         MetaData(String title) { this.title = title; }
     }
 
@@ -49,10 +50,10 @@ public class YoutubeDownloadService extends DownloadServiceBase {
                 MessageFormat.format(downloadEndpoint, dataResponse.get("hash"), dataResponse.get("user"))
         );
     }
+
     private HashMap<String, String> jsonToHashMap(String json) {
         return new Gson().fromJson(json, new TypeToken<HashMap<String, String>>(){}.getType());
     }
-
     private MetaData jsonToMetaData(String json) {
         return new Gson().fromJson(json, new TypeToken<MetaData>(){}.getType());
     }

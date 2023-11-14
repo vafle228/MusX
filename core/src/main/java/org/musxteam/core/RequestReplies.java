@@ -8,9 +8,7 @@ public enum RequestReplies {
 
     private final String reply;
 
-    RequestReplies(String reply) {
-        this.reply = reply;
-    }
+    RequestReplies(String reply) { this.reply = reply; }
 
     public String getReply() { return reply; }
 }

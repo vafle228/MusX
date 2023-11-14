@@ -27,7 +27,5 @@ public class YoutubeSearchService extends SearchServiceBase {
     private String formatApiRequest(String query) {
         return MessageFormat.format(searchEndpoint, encodeURL(query), youtubeKeyProvider.getApiKey());
     }
-    private String encodeURL(String query) {
-        return URLEncoder.encode(query, StandardCharsets.UTF_8);
-    }
+    private String encodeURL(String query) { return URLEncoder.encode(query, StandardCharsets.UTF_8); }
 }

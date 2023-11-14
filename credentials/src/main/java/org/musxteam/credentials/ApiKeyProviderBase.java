@@ -5,10 +5,11 @@ import java.util.Objects;
 public abstract class ApiKeyProviderBase {
     private String apiKey = null;
 
-    public ApiKeyProviderBase(String[] args) { setApiKey(args); }
+    public ApiKeyProviderBase(String[] args) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+        setApiKey(args);
+    }
 
     public abstract String getKeyName();
-
     public String getApiKey() { return apiKey; }
 
     private void setApiKey(String[] arguments) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {

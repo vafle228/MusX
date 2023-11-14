@@ -7,8 +7,12 @@ public class TelegramKeyProviderTest {
 
     @Test
     void testKeyProvider() {
-        String[] args = new String[] { "telegram_apikey=" + key };
-        TelegramKeyProvider keyProvider = new TelegramKeyProvider(args);
-        Assertions.assertEquals(key, keyProvider.getApiKey());
+        try {
+            String[] args = new String[] { "telegram_apikey=" + key };
+            TelegramKeyProvider keyProvider = new TelegramKeyProvider(args);
+            Assertions.assertEquals(key, keyProvider.getApiKey());
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException ex) {
+            Assertions.fail(ex.getMessage());
+        }
     }
 }

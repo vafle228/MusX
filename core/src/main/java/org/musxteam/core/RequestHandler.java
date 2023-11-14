@@ -38,7 +38,6 @@ public class RequestHandler {
         if (Objects.equals(request.getText(), "/download"))
             handleUsers.put(request.getUserId(), new DownloadMusicCommand());
     }
-
     public void startNewArgCommand(IRequest request) {
         if (Pattern.matches("/download .{11}", request.getText()))
             handleUsers.put(request.getUserId(), new DownloadMusicArgCommand());

@@ -6,24 +6,14 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 public class CallbackRequest implements IRequest {
     private final CallbackQuery callbackQuery;
-    public CallbackRequest(CallbackQuery callbackQuery) {
-        this.callbackQuery = callbackQuery;
-    }
+    public CallbackRequest(CallbackQuery callbackQuery) { this.callbackQuery = callbackQuery; }
 
     @Override
-    public String getText() {
-        return callbackQuery.getData();
-    }
+    public String getText() { return callbackQuery.getData(); }
     @Override
-    public String getUserId() {
-        return callbackQuery.getFrom().getId().toString();
-    }
+    public String getUserId() { return callbackQuery.getFrom().getId().toString(); }
     @Override
-    public String getChatId() {
-        return callbackQuery.getMessage().getChatId().toString();
-    }
+    public String getChatId() { return callbackQuery.getMessage().getChatId().toString(); }
     @Override
-    public MusxUser getUser() {
-        return MusxUser.getInstance();
-    }
+    public MusxUser getUser() { return MusxUser.getInstance(); }
 }

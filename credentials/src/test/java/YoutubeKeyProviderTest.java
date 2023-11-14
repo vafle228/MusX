@@ -7,8 +7,12 @@ public class YoutubeKeyProviderTest {
 
     @Test
     void testKeyProvider() {
-        String[] args = new String[] { "youtube_apikey=" + key };
-        YoutubeKeyProvider keyProvider = new YoutubeKeyProvider(args);
-        Assertions.assertEquals(key, keyProvider.getApiKey());
+        try {
+            String[] args = new String[] { "youtube_apikey=" + key };
+            YoutubeKeyProvider keyProvider = new YoutubeKeyProvider(args);
+            Assertions.assertEquals(key, keyProvider.getApiKey());
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException ex) {
+            Assertions.fail(ex.getMessage());
+        }
     }
 }

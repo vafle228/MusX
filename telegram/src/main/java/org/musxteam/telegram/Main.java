@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
-    public static void main(String[] args) throws TelegramApiException {
+    public static void main(String[] args) throws TelegramApiException, IllegalArgumentException, ArrayIndexOutOfBoundsException {
         YoutubeMusicService.initYoutubeKeyProvider(args);
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(new MusXBot(args));
