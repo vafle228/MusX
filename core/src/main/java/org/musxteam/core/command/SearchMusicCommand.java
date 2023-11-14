@@ -21,7 +21,8 @@ public class SearchMusicCommand extends CommandBase {
         SearchViewBase view = viewFactory.getSearchView(
                 item.getItemTitle(), item.getItemVideoId(),
                 item.getItemChannelTitle(), item.getItemThumbnail()
-        ); return new HandlingState(view, false);
+        );
+        return new HandlingState(view, false);
     }
 
     class StartState implements ICommandState {
@@ -40,8 +41,7 @@ public class SearchMusicCommand extends CommandBase {
                 MusicServiceBase service = request.getUser().musicService;
                 ISearchItem item = service.searchMusic(request.getText());
                 changeState(new SearchViewState()); return formSearchResponse(item, viewFactory);
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
             }
         }
@@ -57,8 +57,7 @@ public class SearchMusicCommand extends CommandBase {
                     case "prev" -> formSearchResponse(service.getPrevItem(), viewFactory);
                     default -> new HandlingState(viewFactory.getTextMessageView("Illegal argument"), false);
                 };
-            }
-            catch (ArrayIndexOutOfBoundsException ex) {
+            } catch (ArrayIndexOutOfBoundsException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), false);
             }
         }

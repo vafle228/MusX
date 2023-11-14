@@ -26,8 +26,7 @@ public class DownloadMusicArgCommand extends CommandBase {
                 DownloadViewBase view = viewFactory.getDownloadView(
                         instance.title(), instance.musicUrl(), instance.thumbnailUrl()
                 ); return new HandlingState(view, true);
-            }
-            catch (IOException | ArrayIndexOutOfBoundsException ex) {
+            } catch (IOException | ArrayIndexOutOfBoundsException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
             }
         }

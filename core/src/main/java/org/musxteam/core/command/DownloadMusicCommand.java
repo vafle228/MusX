@@ -22,7 +22,8 @@ public class DownloadMusicCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             TextMessageViewBase view = viewFactory.getTextMessageView(
                     RequestReplies.DOWNLOAD_START.getReply()
-            ); changeState(new DownloadState()); return new HandlingState(view, false);
+            );
+            changeState(new DownloadState()); return new HandlingState(view, false);
         }
     }
 
@@ -36,8 +37,7 @@ public class DownloadMusicCommand extends CommandBase {
                 DownloadViewBase view = viewFactory.getDownloadView(
                         instance.title(), instance.musicUrl(), instance.thumbnailUrl()
                 ); return new HandlingState(view, true);
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
             }
         }
