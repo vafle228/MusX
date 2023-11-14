@@ -1,3 +1,5 @@
+package music;
+
 import org.musxteam.music.download.DownloadServiceBase;
 import org.musxteam.music.download.types.MusicInstance;
 

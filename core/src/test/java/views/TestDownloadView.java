@@ -10,6 +10,6 @@ public class TestDownloadView extends DownloadViewBase {
 
     @Override
     public void render(IRequest request) {
-        System.out.println(title + " " + audioUrl + " " + thumbnailUrl);
+        System.out.print(title + "|" + audioUrl + "|" + thumbnailUrl);
     }
 }

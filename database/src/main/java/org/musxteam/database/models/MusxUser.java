@@ -9,10 +9,9 @@ public class MusxUser {
     public MusicServiceBase musicService;
     private static final MusxUser instance = new MusxUser("User", new YoutubeMusicService());
 
-    public static MusxUser getInstance() {
-        return instance;
-    }
-    private MusxUser(String name, MusicServiceBase musicService) {
+    public MusxUser(String name, MusicServiceBase musicService) {
         this.name = name; this.musicService = musicService;
     }
+
+    public static MusxUser getInstance() { return instance; }
 }

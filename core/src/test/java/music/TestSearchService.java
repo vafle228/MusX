@@ -1,6 +1,8 @@
+package music;
+
 import org.musxteam.music.search.SearchServiceBase;
 import org.musxteam.music.search.types.ISearchItemsContainer;
-import types.TestSearchItemContainer;
+import music.types.TestSearchItemContainer;
 
 import java.io.IOException;
 

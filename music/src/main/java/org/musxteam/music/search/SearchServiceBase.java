@@ -22,7 +22,7 @@ public abstract class SearchServiceBase {
         return itemsContainer.getSearchItems()[currentItem];
     }
     public ISearchItem getNextItem() throws ArrayIndexOutOfBoundsException {
-        if (currentItem + 1 > itemsContainer.getSearchItems().length)
+        if (currentItem + 1 >= itemsContainer.getSearchItems().length)
             throw new ArrayIndexOutOfBoundsException("Search item out of range");
         return itemsContainer.getSearchItems()[++currentItem];
     }

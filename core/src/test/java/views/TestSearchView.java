@@ -10,6 +10,6 @@ public class TestSearchView extends SearchViewBase {
 
     @Override
     public void render(IRequest request) {
-        System.out.println(title + " " + videoId + " " + channelTitle + " " + thumbnailUrl);
+        System.out.print(title + "|" + videoId + "|" + channelTitle + "|" + thumbnailUrl);
     }
 }
