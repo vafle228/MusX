@@ -6,7 +6,7 @@ import org.musxteam.database.models.MusxUser;
 
 public class TestRequest implements IRequest {
     private final String text;
-    private static final MusxUser user = new MusxUser("test", new TestMusicService());
+    private static final MusxUser user = new MusxUser(0, "test", new TestMusicService());
 
     public TestRequest(String text) { this.text = text; }
 
