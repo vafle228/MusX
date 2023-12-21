@@ -9,5 +9,5 @@ public interface IViewFactory {
     PlaylistViewBase getPlaylistView(ArrayList<PlaylistView> playlistViews);
     DownloadViewBase getDownloadView(String title, String audioUrl, String thumbnailUrl);
     SearchViewBase getSearchView(String title, String videoId, String channelTitle, String thumbnailUrl);
-    PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String channelTitle, String thumbnailUrl);
+    PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String playlistId, String channelTitle, String thumbnailUrl);
 }

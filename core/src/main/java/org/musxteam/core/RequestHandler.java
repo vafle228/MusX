@@ -50,5 +50,8 @@ public class RequestHandler {
 
         if (Pattern.matches("/playlist_add .{11}", request.getText()))
             handleUsers.put(request.getUserId(), new PlaylistAddArgCommand());
+
+        if (Pattern.matches("/playlist_del \\d+ \\d+", request.getText()))
+            handleUsers.put(request.getUserId(), new PlaylistDeleteArgCommand());
     }
 }

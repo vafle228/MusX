@@ -24,7 +24,7 @@ public class TestViewFactory implements IViewFactory {
         return new TestSearchView(title, videoId, channelTitle, thumbnailUrl);
     }
     @Override
-    public PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String channelTitle, String thumbnailUrl) {
+    public PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String playlistId, String channelTitle, String thumbnailUrl) {
         return null;
     }
 }

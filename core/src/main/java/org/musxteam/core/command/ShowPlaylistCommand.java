@@ -26,7 +26,7 @@ public class ShowPlaylistCommand extends CommandBase {
     private HandlingState formResponse(MusicEntryModel entry, IViewFactory viewFactory) {
         PlaylistTrackViewBase view = viewFactory.getPlaylistTrackView(
                 entry.title(), entry.videoId(), Integer.toString(entry.id()),
-                entry.channelTitle(), entry.getThumbnailUrl()
+                Integer.toString(playlist.id()), entry.channelTitle(), entry.getThumbnailUrl()
         );
         return new HandlingState(view, false);
     }

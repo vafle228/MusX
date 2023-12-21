@@ -19,9 +19,9 @@ import java.util.List;
 public class TelegramPlaylistTrackView extends PlaylistTrackViewBase {
     private final TelegramLongPollingBot bot;
 
-    public TelegramPlaylistTrackView(String title, String videoId, String entryId,
+    public TelegramPlaylistTrackView(String title, String videoId, String entryId, String playlistId,
                                      String channelTitle, String thumbnailUrl, TelegramLongPollingBot bot) {
-        super(title, videoId, entryId, channelTitle, thumbnailUrl); this.bot = bot;
+        super(title, videoId, entryId, playlistId, channelTitle, thumbnailUrl); this.bot = bot;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class TelegramPlaylistTrackView extends PlaylistTrackViewBase {
         secondRow.add(InlineKeyboardButton.builder().text("Download").callbackData("/download " + videoId).build());
 
         List<InlineKeyboardButton> thirdRow = new ArrayList<>();
-        thirdRow.add(InlineKeyboardButton.builder().text("Remove from playlist").callbackData("/playlist_del " + entryId).build());
+        thirdRow.add(InlineKeyboardButton.builder().text("Remove from playlist").callbackData("/playlist_del " + playlistId + " " + entryId).build());
 
         keyboard.add(firstRow); keyboard.add(secondRow); keyboard.add(thirdRow);markup.setKeyboard(keyboard);
 

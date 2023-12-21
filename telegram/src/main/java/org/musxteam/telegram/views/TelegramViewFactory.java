@@ -16,8 +16,8 @@ public class TelegramViewFactory implements IViewFactory {
         return new TelegramSearchView(title, videoId, channelTitle, thumbnailUrl, bot);
     }
     @Override
-    public PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String channelTitle, String thumbnailUrl) {
-        return new TelegramPlaylistTrackView(title, videoId, entryId, channelTitle, thumbnailUrl, bot);
+    public PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String playlistId, String channelTitle, String thumbnailUrl) {
+        return new TelegramPlaylistTrackView(title, videoId, entryId, playlistId, channelTitle, thumbnailUrl, bot);
     }
     @Override
     public TextMessageViewBase getTextMessageView(String text) {
