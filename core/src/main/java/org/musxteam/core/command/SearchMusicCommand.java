@@ -5,7 +5,7 @@ import org.musxteam.core.IRequest;
 import org.musxteam.core.command.types.CommandBase;
 import org.musxteam.core.command.types.HandlingState;
 import org.musxteam.core.command.types.ICommandState;
-import org.musxteam.core.views.MusicViewBase;
+import org.musxteam.core.views.SearchViewBase;
 import org.musxteam.core.views.TextMessageViewBase;
 import org.musxteam.core.views.types.IViewFactory;
 import org.musxteam.music.search.types.ISearchItem;
@@ -18,7 +18,7 @@ public class SearchMusicCommand extends CommandBase {
     protected ICommandState initStartState() { return new StartState(); }
 
     private HandlingState formSearchResponse(ISearchItem item, IViewFactory viewFactory) {
-        MusicViewBase view = viewFactory.getSearchView(
+        SearchViewBase view = viewFactory.getSearchView(
                 item.getItemTitle(), item.getItemVideoId(),
                 item.getItemChannelTitle(), item.getItemThumbnail()
         );

@@ -9,8 +9,12 @@ public abstract class SearchServiceBase {
     private int currentItem = 0;
     private ISearchItemsContainer itemsContainer;
 
+    protected abstract ISearchItemsContainer executeSearchId(String id) throws IOException;
     protected abstract ISearchItemsContainer executeSearchQuery(String query) throws IOException;
 
+    public ISearchItem searchId(String id) throws IOException {
+        itemsContainer = executeSearchId(id); currentItem = 0; return getCurrentItem();
+    }
     public ISearchItem searchMusic(String query) throws IOException {
         itemsContainer = executeSearchQuery(query); currentItem = 0; return getCurrentItem();
     }

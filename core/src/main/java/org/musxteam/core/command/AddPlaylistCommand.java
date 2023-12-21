@@ -26,7 +26,7 @@ public class AddPlaylistCommand extends CommandBase {
     class PlaylistAddState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
-            PlayListManager.addPlayList(request.getText(), request.getUser().getId());
+            PlayListManager.addPlaylist(request.getText(), request.getUser().getId());
             return new HandlingState(viewFactory.getTextMessageView(RequestReplies.PLAYLIST_ADDED.getReply()), true);
         }
     }

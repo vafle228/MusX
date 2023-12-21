@@ -40,9 +40,15 @@ public class RequestHandler {
 
         if (Objects.equals(request.getText(), "/show_playlist"))
             handleUsers.put(request.getUserId(), new ShowPlaylistCommand());
+
+        if (Objects.equals(request.getText(), "/del_playlist"))
+            handleUsers.put(request.getUserId(), new DeletePlaylistCommand());
     }
     public void startNewArgCommand(IRequest request) {
         if (Pattern.matches("/download .{11}", request.getText()))
             handleUsers.put(request.getUserId(), new DownloadMusicArgCommand());
+
+        if (Pattern.matches("/playlist_add .{11}", request.getText()))
+            handleUsers.put(request.getUserId(), new PlaylistAddArgCommand());
     }
 }

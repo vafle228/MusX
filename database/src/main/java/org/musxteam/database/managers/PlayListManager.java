@@ -18,18 +18,16 @@ public class PlayListManager {
             "SELECT * FROM playlist_music_entries WHERE playlist_id = \"{0}\"";
     private static final String SELECT_MUSIC_COMMAND =
             "SELECT * FROM playlist_music_entries WHERE playlist_id = \"{0}\" and music_entry_id = \"{1}\"";
-    private static final String GET_COMMAND = "SELECT * FROM PlayList";
+    private static final String GET_COMMAND = "SELECT * FROM PlayList WHERE user = \"{0}\"";
     private static final String DELETE_COMMAND = "DELETE FROM PlayList WHERE id = \"{0}\"";
     private static final String SELECT_COMMAND = "SELECT * FROM PlayList WHERE id = \"{0}\"";
     private static final String UPDATE_COMMAND = "UPDATE PlayList SET name = \"{0}\" WHERE id = \"{1}\"";
 
-    public static PlayListModel addPlayList(String title, int user_id) {
+    public static void addPlaylist(String title, int user_id) {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         connection.executeUpdate(MessageFormat.format(ADD_COMMAND, title, user_id));
-
-        return getAllPlayLists().getLast();
     }
-    public static void deletePlayList(int id) {
+    public static void deletePlaylist(int id) {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         connection.executeUpdate(MessageFormat.format(DELETE_COMMAND, id));
     }
@@ -49,10 +47,12 @@ public class PlayListManager {
         catch (SQLException ex) { ex.printStackTrace(System.out); }
         connection.executeUpdate(MessageFormat.format(ADD_MUSIC_COMMAND, playlistId, entry.id()));
     }
-    public static ArrayList<PlayListModel> selectPlayList(int id) {
+    public static ArrayList<PlayListModel> selectPlaylist(int id) {
         return getPlayLists(MessageFormat.format(SELECT_COMMAND, id));
     }
-    public static ArrayList<PlayListModel> getAllPlayLists() { return getPlayLists(GET_COMMAND); }
+    public static ArrayList<PlayListModel> getAllUserPlaylists(int userId) {
+        return getPlayLists(MessageFormat.format(GET_COMMAND, userId));
+    }
 
     private static ArrayList<PlayListModel> getPlayLists(String query) {
         DatabaseConnection connection = DatabaseConnection.getInstance();

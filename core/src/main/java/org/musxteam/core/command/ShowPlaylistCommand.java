@@ -5,7 +5,7 @@ import org.musxteam.core.RequestReplies;
 import org.musxteam.core.command.types.CommandBase;
 import org.musxteam.core.command.types.HandlingState;
 import org.musxteam.core.command.types.ICommandState;
-import org.musxteam.core.views.MusicViewBase;
+import org.musxteam.core.views.PlaylistTrackViewBase;
 import org.musxteam.core.views.PlaylistViewBase;
 import org.musxteam.core.views.TextMessageViewBase;
 import org.musxteam.core.views.types.IViewFactory;
@@ -24,8 +24,8 @@ public class ShowPlaylistCommand extends CommandBase {
     protected ICommandState initStartState() { return new StartState(); }
 
     private HandlingState formResponse(MusicEntryModel entry, IViewFactory viewFactory) {
-        MusicViewBase view = viewFactory.getSearchView(
-                entry.title(), entry.videoId(),
+        PlaylistTrackViewBase view = viewFactory.getPlaylistTrackView(
+                entry.title(), entry.videoId(), Integer.toString(entry.id()),
                 entry.channelTitle(), entry.getThumbnailUrl()
         );
         return new HandlingState(view, false);
@@ -36,7 +36,7 @@ public class ShowPlaylistCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             ArrayList<PlaylistView> views = new ArrayList<>();
 
-            for (PlayListModel playlist : PlayListManager.getAllPlayLists()) {
+            for (PlayListModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
                 views.add(new PlaylistView(playlist.title(), playlist.id()));
             }
             PlaylistViewBase view = viewFactory.getPlaylistView(views);
@@ -49,7 +49,7 @@ public class ShowPlaylistCommand extends CommandBase {
         @Override
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             int playlistId = Integer.parseInt(request.getText());
-            ArrayList<PlayListModel> entry = PlayListManager.selectPlayList(playlistId);
+            ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
 
             if (!entry.isEmpty()) {
                 playlist = entry.getFirst();
@@ -61,7 +61,8 @@ public class ShowPlaylistCommand extends CommandBase {
 
                 return new PlaylistEmptyState().handleRequest(request, viewFactory);
             }
-            return new HandlingState(viewFactory.getTextMessageView(RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
+            return new HandlingState(viewFactory.getTextMessageView(
+                    RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
         }
     }
 

@@ -20,6 +20,9 @@ public abstract class MusicServiceBase {
     public ISearchItem searchMusic(String query) throws IOException {
         return searchService.searchMusic(query);
     }
+    public ISearchItem searchId(String id) throws IOException {
+        return searchService.searchId(id);
+    }
 
     public ISearchItem getNextItem() throws ArrayIndexOutOfBoundsException {
         return searchService.getNextItem();

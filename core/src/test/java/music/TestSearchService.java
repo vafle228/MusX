@@ -8,6 +8,10 @@ import java.io.IOException;
 
 public class TestSearchService extends SearchServiceBase {
     @Override
+    protected ISearchItemsContainer executeSearchId(String id) throws IOException {
+        return new TestSearchItemContainer();
+    }
+    @Override
     protected ISearchItemsContainer executeSearchQuery(String query) throws IOException {
         return new TestSearchItemContainer();
     }

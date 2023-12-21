@@ -1,9 +1,9 @@
 package views;
 
 import org.musxteam.core.IRequest;
-import org.musxteam.core.views.MusicViewBase;
+import org.musxteam.core.views.SearchViewBase;
 
-public class TestSearchView extends MusicViewBase {
+public class TestSearchView extends SearchViewBase {
     public TestSearchView(String title, String videoId, String channelTitle, String thumbnailUrl) {
         super(title, videoId, channelTitle, thumbnailUrl);
     }

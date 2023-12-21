@@ -12,19 +12,21 @@ public class TelegramViewFactory implements IViewFactory {
     public TelegramViewFactory(TelegramLongPollingBot bot) { this.bot = bot; }
 
     @Override
-    public MusicViewBase getSearchView(String title, String videoId, String channelTitle, String thumbnailUrl) {
-        return new TelegramMusicView(title, videoId, channelTitle, thumbnailUrl, bot);
+    public SearchViewBase getSearchView(String title, String videoId, String channelTitle, String thumbnailUrl) {
+        return new TelegramSearchView(title, videoId, channelTitle, thumbnailUrl, bot);
+    }
+    @Override
+    public PlaylistTrackViewBase getPlaylistTrackView(String title, String videoId, String entryId, String channelTitle, String thumbnailUrl) {
+        return new TelegramPlaylistTrackView(title, videoId, entryId, channelTitle, thumbnailUrl, bot);
     }
     @Override
     public TextMessageViewBase getTextMessageView(String text) {
         return new TelegramTextMessageView(text, bot);
     }
-
     @Override
     public PlaylistViewBase getPlaylistView(ArrayList<PlaylistView> playlistViews) {
         return new TelegramPlaylistView(playlistViews, bot);
     }
-
     @Override
     public DownloadViewBase getDownloadView(String title, String audioUrl, String thumbnailUrl) {
         return new TelegramDownloadView(title, audioUrl, thumbnailUrl, bot);
