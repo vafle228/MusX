@@ -34,15 +34,14 @@ public class DeletePlaylistCommand extends CommandBase {
     class DeletePlaylistState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
-            int playlistId = Integer.parseInt(request.getText());
-            ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
-
-            if (!entry.isEmpty()) {
+            try {
+                int playlistId = Integer.parseInt(request.getText());
                 PlayListManager.deletePlaylist(playlistId);
                 return new HandlingState(viewFactory.getTextMessageView("Successful deleted"), true);
             }
-            return new HandlingState(viewFactory.getTextMessageView(
-                    RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
+            catch (IllegalArgumentException ex) {
+                return new HandlingState(viewFactory.getTextMessageView(ex.getMessage()), false);
+            }
         }
     }
 }

@@ -48,21 +48,26 @@ public class ShowPlaylistCommand extends CommandBase {
     class GetPlaylistState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
-            int playlistId = Integer.parseInt(request.getText());
-            ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
+            try {
+                int playlistId = Integer.parseInt(request.getText());
+                ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
 
-            if (!entry.isEmpty()) {
-                playlist = entry.getFirst();
+                if (!entry.isEmpty()) {
+                    playlist = entry.getFirst();
 
-                if (!playlist.musicEntries().isEmpty()) {
-                    changeState(new PlaylistSearchState());
-                    return formResponse(playlist.musicEntries().get(currentElement), viewFactory);
+                    if (!playlist.musicEntries().isEmpty()) {
+                        changeState(new PlaylistSearchState());
+                        return formResponse(playlist.musicEntries().get(currentElement), viewFactory);
+                    }
+
+                    return new PlaylistEmptyState().handleRequest(request, viewFactory);
                 }
-
-                return new PlaylistEmptyState().handleRequest(request, viewFactory);
+                return new HandlingState(viewFactory.getTextMessageView(
+                        RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
             }
-            return new HandlingState(viewFactory.getTextMessageView(
-                    RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
+            catch (IllegalArgumentException ex) {
+                return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
+            }
         }
     }
 

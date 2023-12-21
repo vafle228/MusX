@@ -18,17 +18,21 @@ public class PlayListManager {
             "SELECT * FROM playlist_music_entries WHERE playlist_id = \"{0}\"";
     private static final String SELECT_MUSIC_COMMAND =
             "SELECT * FROM playlist_music_entries WHERE playlist_id = \"{0}\" and music_entry_id = \"{1}\"";
+    private static final String DELETE_MUSIC_COMMAND =
+            "DELETE FROM playlist_music_entries WHERE playlist_id = \"{0}\" and music_entry_id = \"{1}\"";
     private static final String GET_COMMAND = "SELECT * FROM PlayList WHERE user = \"{0}\"";
     private static final String DELETE_COMMAND = "DELETE FROM PlayList WHERE id = \"{0}\"";
     private static final String SELECT_COMMAND = "SELECT * FROM PlayList WHERE id = \"{0}\"";
-    private static final String UPDATE_COMMAND = "UPDATE PlayList SET name = \"{0}\" WHERE id = \"{1}\"";
 
     public static void addPlaylist(String title, int user_id) {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         connection.executeUpdate(MessageFormat.format(ADD_COMMAND, title, user_id));
     }
-    public static void deletePlaylist(int id) {
+    public static void deletePlaylist(int id) throws IllegalArgumentException {
         DatabaseConnection connection = DatabaseConnection.getInstance();
+
+        if (selectPlaylist(id).isEmpty())
+            throw new IllegalArgumentException("There is no playlist!");
         connection.executeUpdate(MessageFormat.format(DELETE_COMMAND, id));
     }
     public static void addMusicEntry(int playlistId, String videoId,
@@ -37,15 +41,16 @@ public class PlayListManager {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         MusicEntryModel entry = MusicEntryManager.addMusicEntry(videoId, musicService, title, channelTitle);
 
-        try {
-            ResultSet playlistMusic = connection.executeQuery(
-                    MessageFormat.format(SELECT_MUSIC_COMMAND, playlistId, entry.id())
-            );
-            boolean alreadyAdded = playlistMusic.next(); playlistMusic.close();
-            if (alreadyAdded) { throw new IllegalArgumentException("Already in playlist!"); }
-        }
-        catch (SQLException ex) { ex.printStackTrace(System.out); }
+        if (isTrackExists(playlistId, entry.id()))
+            throw new IllegalArgumentException("Already exists!");
         connection.executeUpdate(MessageFormat.format(ADD_MUSIC_COMMAND, playlistId, entry.id()));
+    }
+    public static void deleteMusicEntry(int playlistId, int entryId) throws IllegalArgumentException {
+        DatabaseConnection connection = DatabaseConnection.getInstance();
+
+        if (!isTrackExists(playlistId, entryId))
+            throw new IllegalArgumentException("There is no track!");
+        connection.executeUpdate(MessageFormat.format(DELETE_MUSIC_COMMAND, playlistId, entryId));
     }
     public static ArrayList<PlayListModel> selectPlaylist(int id) {
         return getPlayLists(MessageFormat.format(SELECT_COMMAND, id));
@@ -54,6 +59,17 @@ public class PlayListManager {
         return getPlayLists(MessageFormat.format(GET_COMMAND, userId));
     }
 
+    private static boolean isTrackExists(int playlistId, int entryId) {
+        DatabaseConnection connection = DatabaseConnection.getInstance();
+        try {
+            ResultSet playlistMusic = connection.executeQuery(
+                    MessageFormat.format(SELECT_MUSIC_COMMAND, playlistId, entryId)
+            );
+            boolean alreadyAdded = playlistMusic.next();
+            playlistMusic.close(); return alreadyAdded;
+        }
+        catch (SQLException ex) { ex.printStackTrace(System.out); return true; }
+    }
     private static ArrayList<PlayListModel> getPlayLists(String query) {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         try {

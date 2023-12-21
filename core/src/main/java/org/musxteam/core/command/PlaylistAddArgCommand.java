@@ -40,11 +40,11 @@ public class PlaylistAddArgCommand extends CommandBase {
     class AddToPlaylistState implements ICommandState {
         @Override
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
-            int playlistId = Integer.parseInt(request.getText());
-            ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
+            try {
+                int playlistId = Integer.parseInt(request.getText());
+                ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
 
-            if (!entry.isEmpty()) {
-                try {
+                if (!entry.isEmpty()) {
                     MusicServiceBase service = request.getUser().musicService;
                     ISearchItem item = service.searchId(videoId);
                     PlayListManager.addMusicEntry(
@@ -54,12 +54,12 @@ public class PlaylistAddArgCommand extends CommandBase {
                     return new HandlingState(viewFactory.getTextMessageView(
                             RequestReplies.PLAYLIST_TRACK_ADDED.getReply()), true);
                 }
-                catch (IOException | IllegalArgumentException ex) {
-                    return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
-                }
+                return new HandlingState(viewFactory.getTextMessageView(
+                        RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
             }
-            return new HandlingState(viewFactory.getTextMessageView(
-                    RequestReplies.ILLEGAL_PLAYLIST_ID.getReply()), false);
+            catch (IOException | IllegalArgumentException ex) {
+                return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
+            }
         }
     }
 }
