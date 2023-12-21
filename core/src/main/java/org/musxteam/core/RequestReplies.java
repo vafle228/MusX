@@ -4,6 +4,11 @@ public enum RequestReplies {
     HELP("Hello, how can I help u?"),
     SEARCH_START("Введите поисковой запрос"),
     DOWNLOAD_START("Введите id трека"),
+    ADD_PLAYLIST_START("Enter playlist name"),
+    PLAYLIST_ADDED("New playlist successfully added"),
+    PLAYLIST_SHOW_START("Choose playlist"),
+    ILLEGAL_PLAYLIST_ID("Illegal playlist id! Chose another"),
+    EMPTY_PLAYLIST("This playlist is empty!"),
     EMPTY_COMMAND("Write some commands first");
 
     private final String reply;

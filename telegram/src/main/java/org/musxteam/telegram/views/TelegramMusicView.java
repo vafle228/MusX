@@ -1,7 +1,7 @@
 package org.musxteam.telegram.views;
 
 import org.musxteam.core.IRequest;
-import org.musxteam.core.views.SearchViewBase;
+import org.musxteam.core.views.MusicViewBase;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -10,16 +10,15 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TelegramSearchView extends SearchViewBase {
+public class TelegramMusicView extends MusicViewBase {
     private final TelegramLongPollingBot bot;
-    public TelegramSearchView(String title, String videoId, String channelTitle, String thumbnailUrl, TelegramLongPollingBot bot) {
+    public TelegramMusicView(String title, String videoId, String channelTitle, String thumbnailUrl, TelegramLongPollingBot bot) {
         super(title, videoId, channelTitle, thumbnailUrl); this.bot = bot;
     }
 

@@ -10,19 +10,19 @@ import java.util.ArrayList;
 
 public class MusicEntryManager {
     private static final String ADD_COMMAND =
-            "INSERT INTO MusicEntry (videoId, musicService) VALUES (\"{0}\", \"{1}\")";
+            "INSERT INTO MusicEntry (videoId, musicService, title, channelTitle) VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\")";
     private static final String SELECT_COMMAND =
             "SELECT * FROM MusicEntry WHERE videoId = \"{0}\" and musicService = \"{1}\"";
     private static final String GET_COMMAND = "SELECT * FROM MusicEntry";
     private static final String DELETE_COMMAND = "DELETE FROM MusicEntry WHERE id = \"{0}\"";
     private static final String SELECT_ID_COMMAND = "SELECT * FROM MusicEntry WHERE id = \"{0}\"";
 
-    public static MusicEntryModel addMusicEntry(String videoId, String musicService) {
+    public static MusicEntryModel addMusicEntry(String videoId, String musicService, String title, String channelTitle) {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         ArrayList<MusicEntryModel> entry = selectMusicEntry(videoId, musicService);
 
         if (entry.isEmpty()){
-            connection.executeUpdate(MessageFormat.format(ADD_COMMAND, videoId, musicService));
+            connection.executeUpdate(MessageFormat.format(ADD_COMMAND, videoId, musicService, title, channelTitle));
             return selectMusicEntry(videoId, musicService).getFirst();
         }
         return entry.getFirst();
@@ -50,7 +50,9 @@ public class MusicEntryManager {
             while(resultSet.next()) {
                 result.add(new MusicEntryModel(
                         resultSet.getInt("id"),
+                        resultSet.getString("title"),
                         resultSet.getString("videoId"),
+                        resultSet.getString("channelTitle"),
                         resultSet.getString("musicService")
                 ));
             }

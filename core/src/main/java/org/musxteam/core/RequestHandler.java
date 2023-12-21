@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import org.musxteam.core.command.DownloadMusicArgCommand;
-import org.musxteam.core.command.DownloadMusicCommand;
-import org.musxteam.core.command.HelpCommand;
-import org.musxteam.core.command.SearchMusicCommand;
+import org.musxteam.core.command.*;
 import org.musxteam.core.command.types.HandlingState;
 import org.musxteam.core.command.types.CommandBase;
 import org.musxteam.core.views.types.IView;
@@ -37,6 +34,12 @@ public class RequestHandler {
 
         if (Objects.equals(request.getText(), "/download"))
             handleUsers.put(request.getUserId(), new DownloadMusicCommand());
+
+        if (Objects.equals(request.getText(), "/add_playlist"))
+            handleUsers.put(request.getUserId(), new AddPlaylistCommand());
+
+        if (Objects.equals(request.getText(), "/show_playlist"))
+            handleUsers.put(request.getUserId(), new ShowPlaylistCommand());
     }
     public void startNewArgCommand(IRequest request) {
         if (Pattern.matches("/download .{11}", request.getText()))

@@ -33,19 +33,21 @@ public class PlayListManager {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         connection.executeUpdate(MessageFormat.format(DELETE_COMMAND, id));
     }
-    public static void addMusicEntry(int playlistId, String videoId, String musicService) throws IllegalArgumentException {
+    public static void addMusicEntry(int playlistId, String videoId,
+                                     String musicService, String title, String channelTitle)
+            throws IllegalArgumentException {
         DatabaseConnection connection = DatabaseConnection.getInstance();
-        MusicEntryModel entry = MusicEntryManager.addMusicEntry(videoId, musicService);
+        MusicEntryModel entry = MusicEntryManager.addMusicEntry(videoId, musicService, title, channelTitle);
 
         try {
             ResultSet playlistMusic = connection.executeQuery(
-                    MessageFormat.format(SELECT_MUSIC_COMMAND, playlistId, entry.getId())
+                    MessageFormat.format(SELECT_MUSIC_COMMAND, playlistId, entry.id())
             );
             boolean alreadyAdded = playlistMusic.next(); playlistMusic.close();
             if (alreadyAdded) { throw new IllegalArgumentException("Already in playlist!"); }
         }
         catch (SQLException ex) { ex.printStackTrace(System.out); }
-        connection.executeUpdate(MessageFormat.format(ADD_MUSIC_COMMAND, playlistId, entry.getId()));
+        connection.executeUpdate(MessageFormat.format(ADD_MUSIC_COMMAND, playlistId, entry.id()));
     }
     public static ArrayList<PlayListModel> selectPlayList(int id) {
         return getPlayLists(MessageFormat.format(SELECT_COMMAND, id));
