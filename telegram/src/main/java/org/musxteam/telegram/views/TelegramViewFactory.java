@@ -24,8 +24,8 @@ public class TelegramViewFactory implements IViewFactory {
         return new TelegramTextMessageView(text, bot);
     }
     @Override
-    public PlaylistViewBase getPlaylistView(ArrayList<PlaylistView> playlistViews) {
-        return new TelegramPlaylistView(playlistViews, bot);
+    public PlaylistViewBase getPlaylistView(String title, ArrayList<PlaylistView> playlistViews) {
+        return new TelegramPlaylistView(title, playlistViews, bot);
     }
     @Override
     public DownloadViewBase getDownloadView(String title, String audioUrl, String thumbnailUrl) {

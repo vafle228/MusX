@@ -12,7 +12,7 @@ public class TestViewFactory implements IViewFactory {
         return new TestTextMessageView(text);
     }
     @Override
-    public PlaylistViewBase getPlaylistView(ArrayList<PlaylistView> playlistViews) {
+    public PlaylistViewBase getPlaylistView(String title, ArrayList<PlaylistView> playlistViews) {
         return null;
     }
     @Override

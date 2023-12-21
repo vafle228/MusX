@@ -12,13 +12,13 @@ import org.musxteam.core.views.types.IViewFactory;
 import org.musxteam.core.views.types.PlaylistView;
 import org.musxteam.database.managers.PlayListManager;
 import org.musxteam.database.models.MusicEntryModel;
-import org.musxteam.database.models.PlayListModel;
+import org.musxteam.database.models.PlaylistModel;
 
 import java.util.ArrayList;
 
 public class ShowPlaylistCommand extends CommandBase {
     private int currentElement;
-    private PlayListModel playlist;
+    private PlaylistModel playlist;
 
     @Override
     protected ICommandState initStartState() { return new StartState(); }
@@ -36,10 +36,10 @@ public class ShowPlaylistCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             ArrayList<PlaylistView> views = new ArrayList<>();
 
-            for (PlayListModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
-                views.add(new PlaylistView(playlist.title(), playlist.id()));
+            for (PlaylistModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
+                views.add(new PlaylistView(playlist.title(), Integer.toString(playlist.id())));
             }
-            PlaylistViewBase view = viewFactory.getPlaylistView(views);
+            PlaylistViewBase view = viewFactory.getPlaylistView(RequestReplies.PLAYLIST_CHOOSE.getReply(), views);
 
             changeState(new GetPlaylistState()); return new HandlingState(view, false);
         }
@@ -50,7 +50,7 @@ public class ShowPlaylistCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             try {
                 int playlistId = Integer.parseInt(request.getText());
-                ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
+                ArrayList<PlaylistModel> entry = PlayListManager.selectPlaylist(playlistId);
 
                 if (!entry.isEmpty()) {
                     playlist = entry.getFirst();
@@ -91,7 +91,7 @@ public class ShowPlaylistCommand extends CommandBase {
                     default -> new HandlingState(viewFactory.getTextMessageView("Illegal argument"), false);
                 };
             }
-            catch (ArrayIndexOutOfBoundsException ex) {
+            catch (IndexOutOfBoundsException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), false);
             }
         }

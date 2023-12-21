@@ -42,7 +42,7 @@ public class SearchMusicCommand extends CommandBase {
                 ISearchItem item = service.searchMusic(request.getText());
                 changeState(new SearchViewState()); return formSearchResponse(item, viewFactory);
             }
-            catch (IOException ex) {
+            catch (IOException | ArrayIndexOutOfBoundsException ex) {
                 return new HandlingState(viewFactory.getTextMessageView(ex.toString()), true);
             }
         }

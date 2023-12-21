@@ -9,7 +9,7 @@ import org.musxteam.core.views.PlaylistViewBase;
 import org.musxteam.core.views.types.IViewFactory;
 import org.musxteam.core.views.types.PlaylistView;
 import org.musxteam.database.managers.PlayListManager;
-import org.musxteam.database.models.PlayListModel;
+import org.musxteam.database.models.PlaylistModel;
 import org.musxteam.music.search.types.ISearchItem;
 import org.musxteam.music.service.MusicServiceBase;
 
@@ -28,10 +28,10 @@ public class PlaylistAddArgCommand extends CommandBase {
             videoId = request.getText().split(" ")[1];
             ArrayList<PlaylistView> views = new ArrayList<>();
 
-            for (PlayListModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
-                views.add(new PlaylistView(playlist.title(), playlist.id()));
+            for (PlaylistModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
+                views.add(new PlaylistView(playlist.title(), Integer.toString(playlist.id())));
             }
-            PlaylistViewBase view = viewFactory.getPlaylistView(views);
+            PlaylistViewBase view = viewFactory.getPlaylistView(RequestReplies.PLAYLIST_CHOOSE.getReply(), views);
 
             changeState(new AddToPlaylistState()); return new HandlingState(view, false);
         }
@@ -42,7 +42,7 @@ public class PlaylistAddArgCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             try {
                 int playlistId = Integer.parseInt(request.getText());
-                ArrayList<PlayListModel> entry = PlayListManager.selectPlaylist(playlistId);
+                ArrayList<PlaylistModel> entry = PlayListManager.selectPlaylist(playlistId);
 
                 if (!entry.isEmpty()) {
                     MusicServiceBase service = request.getUser().musicService;

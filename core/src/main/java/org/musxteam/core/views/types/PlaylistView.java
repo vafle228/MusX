@@ -1,4 +1,4 @@
 package org.musxteam.core.views.types;
 
-public record PlaylistView(String title, int id) {
+public record PlaylistView(String title, String id) {
 }

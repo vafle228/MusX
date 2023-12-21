@@ -1,8 +1,9 @@
 package org.musxteam.database.managers;
 
 import org.musxteam.database.DatabaseConnection;
+import org.musxteam.database.managers.types.PlaylistBase;
 import org.musxteam.database.models.MusicEntryModel;
-import org.musxteam.database.models.PlayListModel;
+import org.musxteam.database.models.PlaylistModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,10 +53,10 @@ public class PlayListManager {
             throw new IllegalArgumentException("There is no track!");
         connection.executeUpdate(MessageFormat.format(DELETE_MUSIC_COMMAND, playlistId, entryId));
     }
-    public static ArrayList<PlayListModel> selectPlaylist(int id) {
+    public static ArrayList<PlaylistModel> selectPlaylist(int id) {
         return getPlayLists(MessageFormat.format(SELECT_COMMAND, id));
     }
-    public static ArrayList<PlayListModel> getAllUserPlaylists(int userId) {
+    public static ArrayList<PlaylistModel> getAllUserPlaylists(int userId) {
         return getPlayLists(MessageFormat.format(GET_COMMAND, userId));
     }
 
@@ -70,19 +71,25 @@ public class PlayListManager {
         }
         catch (SQLException ex) { ex.printStackTrace(System.out); return true; }
     }
-    private static ArrayList<PlayListModel> getPlayLists(String query) {
+    private static ArrayList<PlaylistModel> getPlayLists(String query) {
         DatabaseConnection connection = DatabaseConnection.getInstance();
         try {
-            ArrayList<PlayListModel> result = new ArrayList<>();
             ResultSet listSet = connection.executeQuery(query);
+            ArrayList<PlaylistBase> playlistBases = new ArrayList<>();
 
             while(listSet.next()) {
-                result.add(new PlayListModel(
+                playlistBases.add(new PlaylistBase(
                         listSet.getInt("id"),
-                        listSet.getString("title"),
-                        selectMusicEntries(listSet.getInt("id"))
+                        listSet.getString("title")
                 ));
             }
+
+            ArrayList<PlaylistModel> result = new ArrayList<>();
+            for (PlaylistBase base : playlistBases) {
+                ArrayList<MusicEntryModel> musicEntries = selectMusicEntries(base.id());
+                result.add(new PlaylistModel(base.id(), base.title(), musicEntries));
+            }
+
             listSet.close(); return result;
         }
         catch (SQLException ex) { return new ArrayList<>(); }

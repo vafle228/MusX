@@ -9,7 +9,7 @@ import org.musxteam.core.views.PlaylistViewBase;
 import org.musxteam.core.views.types.IViewFactory;
 import org.musxteam.core.views.types.PlaylistView;
 import org.musxteam.database.managers.PlayListManager;
-import org.musxteam.database.models.PlayListModel;
+import org.musxteam.database.models.PlaylistModel;
 
 import java.util.ArrayList;
 
@@ -22,10 +22,10 @@ public class DeletePlaylistCommand extends CommandBase {
         public HandlingState handleRequest(IRequest request, IViewFactory viewFactory) {
             ArrayList<PlaylistView> views = new ArrayList<>();
 
-            for (PlayListModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
-                views.add(new PlaylistView(playlist.title(), playlist.id()));
+            for (PlaylistModel playlist : PlayListManager.getAllUserPlaylists(request.getUser().getId())) {
+                views.add(new PlaylistView(playlist.title(), Integer.toString(playlist.id())));
             }
-            PlaylistViewBase view = viewFactory.getPlaylistView(views);
+            PlaylistViewBase view = viewFactory.getPlaylistView(RequestReplies.PLAYLIST_CHOOSE.getReply(), views);
 
             changeState(new DeletePlaylistState()); return new HandlingState(view, false);
         }

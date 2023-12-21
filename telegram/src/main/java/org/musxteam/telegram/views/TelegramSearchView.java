@@ -54,7 +54,7 @@ public class TelegramSearchView extends SearchViewBase {
         List<InlineKeyboardButton> thirdRow = new ArrayList<>();
         thirdRow.add(InlineKeyboardButton.builder().text("Add to playlist").callbackData("/playlist_add " + videoId).build());
 
-        keyboard.add(firstRow); keyboard.add(secondRow); keyboard.add(thirdRow);markup.setKeyboard(keyboard);
+        keyboard.add(firstRow); keyboard.add(secondRow); keyboard.add(thirdRow); markup.setKeyboard(keyboard);
 
         return markup;
     }
